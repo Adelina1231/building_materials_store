@@ -1,11 +1,16 @@
 import os
-
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-c7y_b%@3$dt!sdt&gib+*)9w$lzgkh3*+2vb&-(a9_zmkw2y#*'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-iwi#jhfdhffd45456')
 
 DEBUG = True
 
@@ -19,7 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'shop',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +91,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 

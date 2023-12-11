@@ -2,7 +2,9 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField('Название категории', max_length=255, unique=True)
+    name = models.CharField('Название категории',
+                            max_length=255,
+                            db_index=True)
     slug = models.SlugField('Адрес', max_length=255, unique=True)
 
     class Meta:
@@ -20,8 +22,10 @@ class Product(models.Model):
                                  on_delete=models.SET_NULL,
                                  verbose_name='Категория',
                                  null=True)
-    name = models.CharField('Название товара', max_length=255)
-    slug = models.SlugField('Адрес', max_length=255, unique=True)
+    name = models.CharField('Название товара', max_length=255, db_index=True)
+    slug = models.SlugField('Адрес', max_length=255,
+                            db_index=True,
+                            unique=True)
     image = models.ImageField('Изображение',
                               upload_to='products/images/',
                               blank=True)
@@ -31,9 +35,11 @@ class Product(models.Model):
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField('Количество товара')
     available = models.BooleanField('Наличие товара', default=True)
+    pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
 
     class Meta:
         ordering = ('name',)
+        index_together = (('id', 'slug'),)
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
