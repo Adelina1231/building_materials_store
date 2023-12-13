@@ -1,0 +1,10 @@
+{% for category in categories %}
+    <h2>{{ category.name }}</h2>
+    <ul>
+        {% for product in products %}
+            {% if product.category == category %}
+                <li><a href="{% url 'product_detail' product_id=product.id %}">{{ product.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endfor %}
