@@ -1,0 +1,9 @@
+<h2>{{ product.name }}</h2>
+<p>Категория: {{ product.category }}</p>
+<p>Описание: {{ product.description }}</p>
+<p>Цена: {{ product.price }} руб</p>
+<form method="POST" action="{% url 'cart:add_to_cart' product.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить в корзину</button>
+</form>

@@ -1,13 +1,21 @@
-'''from django.db import models
+from django.db import models
+from django.contrib.auth.models import User
+
 from shop.models import Product
 
 
 class Cart(models.Model):
-    product = models.ForeignKey(Product, related_name='cart',
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, through='CartItem')
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,
+                                on_delete=models.CASCADE,
                                 verbose_name='Товар')
-    count = models.IntegerField('Количество', default=1)
+    quantity = models.IntegerField('Количество', default=1)
 
     class Meta:
         verbose_name = 'Корзина'
         verbose_name_plural = 'Корзины'
-'''
