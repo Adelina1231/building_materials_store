@@ -13,7 +13,8 @@ def add_to_cart(request, product_id):
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product,
-                 quantity=cd['quantity'])
+                 quantity=cd['quantity'],
+                 update_quantity=cd['update'])
     return redirect('cart:cart_detail')
 
 
@@ -31,7 +32,7 @@ def cart_detail(request):
     for item in cart:
         item['update_quantity'] = AddToCartForm(initial={
             'quantity': item['quantity'],
-            'override': True
+            'update': True
         })
     context = {'cart': cart}
     return render(request, template, context)
